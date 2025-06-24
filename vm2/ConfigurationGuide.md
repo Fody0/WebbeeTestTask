@@ -28,7 +28,7 @@ newgrp docker
 mkdir ~/postgres && cd ~/postgres
 ```
 
-Теперь находясь в папке postgres перемещаем туда файл [docker-compose.yml](docker-compose.yml)
+Теперь находясь в папке postgres перемещаем туда файл [docker-compose.yml](docker-compose.yml) и папку certs
 
 После этого можно поднимать контейнер и все должно работать
 
@@ -37,4 +37,26 @@ docker-compose build -d
 docker-compose up -d
 ```
 
-Далее переходим или к настройке второй машины или к концу основного гайда, [настройка VM2](../vm2/ConfigurationGuide.md), [основной гайд](../README.md)
+Далее переходим или к настройке первой машины или к концу основного гайда, [настройка VM1](../vm1/ConfigurationGuide.md), [основной гайд](../README.md)
+
+### Доп задание
+
+Для решения доп задания с масками нужно скачать dnsmasq
+
+```
+sudo apt install dnsmasq
+```
+
+После этого настроить его добавив в конец файла строку
+
+address=/vm1.local/192.168.56.10 
+
+```
+sudo nano /etc/dnsmasq.conf
+```
+После изменений сохраняем конфиг и перезапускаем сервис
+```
+sudo systemctl restart dnsmasq
+```
+
+Теперь c хоста можно обращаться к vm1 не через адрес 192.168.56.10, а через имя vm1.local
