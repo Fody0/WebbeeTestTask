@@ -30,6 +30,18 @@ mkdir ~/postgres && cd ~/postgres
 
 Теперь находясь в папке postgres перемещаем туда файл [docker-compose.yml](docker-compose.yml) и папку certs
 
+Теперь нужно сгенерировать сертификаты
+
+```
+mkdir -p ~/postgres/certs
+
+cd ~/postgres/certs
+
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout cert.key -out cert.crt \
+  -subj "/C=US/ST=State/L=City/O=Company/CN=vm1.local"
+```
+
 После этого можно поднимать контейнер и все должно работать
 
 ```
@@ -38,25 +50,3 @@ docker-compose up -d
 ```
 
 Далее переходим или к настройке первой машины или к концу основного гайда, [настройка VM1](../vm1/ConfigurationGuide.md), [основной гайд](../README.md)
-
-### Доп задание
-
-Для решения доп задания с масками нужно скачать dnsmasq
-
-```
-sudo apt install dnsmasq
-```
-
-После этого настроить его добавив в конец файла строку
-
-address=/vm1.local/192.168.56.10 
-
-```
-sudo nano /etc/dnsmasq.conf
-```
-После изменений сохраняем конфиг и перезапускаем сервис
-```
-sudo systemctl restart dnsmasq
-```
-
-Теперь c хоста можно обращаться к vm1 не через адрес 192.168.56.10, а через имя vm1.local
