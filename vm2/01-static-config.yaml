@@ -1,0 +1,14 @@
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp0s3:
+      dhcp4: true
+      optional: true
+    enp0s8:
+      nameservers:
+        addresses: [192.168.100.10]
+      dhcp4: no
+      dhcp4-overrides:
+        use-dns: false
+      addresses: [192.168.100.20/24]
